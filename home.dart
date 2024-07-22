@@ -3,7 +3,8 @@
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({super.key, required this.title});
+  final String title;
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -11,7 +12,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
-  String? valueChoose;
+  String? selectedLocation;
+  String? selectedProperty;
+  String? selectedRoom;
   List<String> listLocation = ["Kathmandu", "Lalitpur", "Bhaktapur", "Others"];
   List<String> listProperty = ["Residential", "Commercial", "Room for rent"];
   List<String> listRoom = ["Private Room", "Partition Room", "Bed Space"];
@@ -25,6 +28,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(kToolbarHeight),
         child: ClipRRect(
@@ -99,23 +103,26 @@ class _HomePageState extends State<HomePage> {
                           "Location",
                           style: TextStyle(color: Colors.white),
                         ),
-                        dropdownColor: Colors.white,
+                        dropdownColor: Colors.grey,
                         icon: const Icon(
                           Icons.arrow_drop_down,
                           color: Colors.white,
                         ),
                         iconSize: 20,
                         isExpanded: true,
-                        value: valueChoose,
+                        value: selectedLocation,
                         onChanged: (newValue) {
                           setState(() {
-                            valueChoose = newValue;
+                            selectedLocation = newValue;
                           });
                         },
                         items: listLocation.map((valueItem) {
                           return DropdownMenuItem(
                             value: valueItem,
-                            child: Text(valueItem),
+                            child: Text(
+                              valueItem,
+                              style: const TextStyle(color: Colors.white),
+                            ),
                           );
                         }).toList(),
                       ),
@@ -138,25 +145,27 @@ class _HomePageState extends State<HomePage> {
                         hint: const Text(
                           "Property Type",
                           style: TextStyle(color: Colors.white),
-                          selectionColor: Colors.white,
                         ),
-                        dropdownColor: Colors.white,
+                        dropdownColor: Colors.grey,
                         icon: const Icon(
                           Icons.arrow_drop_down,
                           color: Colors.white,
                         ),
                         iconSize: 20,
                         isExpanded: true,
-                        value: valueChoose,
+                        value: selectedLocation,
                         onChanged: (newValue) {
                           setState(() {
-                            valueChoose = newValue;
+                            selectedLocation = newValue;
                           });
                         },
                         items: listProperty.map((valueItem) {
                           return DropdownMenuItem(
                             value: valueItem,
-                            child: Text(valueItem),
+                            child: Text(
+                              valueItem,
+                              style: const TextStyle(color: Colors.white),
+                            ),
                           );
                         }).toList(),
                       ),
@@ -179,25 +188,29 @@ class _HomePageState extends State<HomePage> {
                         hint: const Text(
                           "Room Type",
                           style: TextStyle(color: Colors.white),
-                          selectionColor: Colors.white,
                         ),
-                        dropdownColor: Colors.white,
+                        dropdownColor: Colors.grey,
                         icon: const Icon(
                           Icons.arrow_drop_down,
                           color: Colors.white,
                         ),
                         iconSize: 20,
                         isExpanded: true,
-                        value: valueChoose,
+                        value: selectedLocation,
                         onChanged: (newValue) {
                           setState(() {
-                            valueChoose = newValue;
+                            selectedLocation = newValue;
                           });
                         },
                         items: listRoom.map((valueItem) {
                           return DropdownMenuItem(
                             value: valueItem,
-                            child: Text(valueItem),
+                            child: Text(
+                              valueItem,
+                              style: const TextStyle(
+                                  color:
+                                      Colors.white), // Set the color to white
+                            ),
                           );
                         }).toList(),
                       ),
@@ -207,22 +220,677 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
             const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Feature Post',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Feature Post',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
                   ),
-                )),
-            const Column(
+                ),
+              ),
+            ),
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               mainAxisSize: MainAxisSize.max,
-              children: <Widget>[],
+              children: <Widget>[
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+                  child: Container(
+                    padding: const EdgeInsets.all(5.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(5),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color.fromARGB(145, 67, 67, 67)
+                              .withOpacity(0.2),
+                          spreadRadius: 1,
+                          blurRadius: 3,
+                          offset:
+                              const Offset(0, 2), // changes position of shadow
+                        )
+                      ],
+                    ),
+                    child: Row(
+                      children: [
+                        Stack(
+                          children: [
+                            Image.asset(
+                              'assets/room.jpg',
+                              width: 130,
+                              height: 115,
+                              fit: BoxFit.cover,
+                            ),
+                            const Positioned(
+                              top: 5,
+                              left: 5,
+                              child: VerifiedContainer(),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Room',
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Icon(
+                                    Icons.favorite_border,
+                                    size: 20,
+                                  ),
+                                ],
+                              ),
+                              const Text(
+                                'Rs.6999 Monthly',
+                                style: TextStyle(
+                                  fontSize: 10.5,
+                                ),
+                              ),
+                              const SizedBox(height: 2),
+                              Wrap(
+                                spacing: 3,
+                                runSpacing: 3,
+                                children: [
+                                  _buildFeatureChip('Attached Bathroom'),
+                                  _buildFeatureChip('Fully Furnished'),
+                                  _buildFeatureChip('Near Mall/Supermarket'),
+                                  _buildFeatureChip('Internet/Wifi'),
+                                  _buildFeatureChip('Washing Machine'),
+                                ],
+                              ),
+                              const SizedBox(height: 3),
+                              const Row(
+                                children: [
+                                  Icon(
+                                    Icons.location_on,
+                                    size: 10,
+                                  ),
+                                  SizedBox(width: 3.5),
+                                  Text(
+                                    'Location',
+                                    style: TextStyle(fontSize: 10),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+                  child: Container(
+                    padding: const EdgeInsets.all(5.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(5),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color.fromARGB(104, 67, 67, 67)
+                              .withOpacity(0.2),
+                          spreadRadius: 1,
+                          blurRadius: 3,
+                          offset:
+                              const Offset(0, 2), // changes position of shadow
+                        )
+                      ],
+                    ),
+                    child: Row(
+                      children: [
+                        Stack(
+                          children: [
+                            Image.asset(
+                              'assets/villa.jpeg',
+                              width: 130,
+                              height: 115,
+                              fit: BoxFit.cover,
+                            ),
+                            const Positioned(
+                              top: 5,
+                              left: 5,
+                              child: VerifiedContainer(),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Villa',
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Icon(
+                                    Icons.favorite_border,
+                                    size: 20,
+                                  ),
+                                ],
+                              ),
+                              const Text(
+                                'Rs.6999 Monthly',
+                                style: TextStyle(
+                                  fontSize: 10.5,
+                                ),
+                              ),
+                              const SizedBox(height: 2),
+                              Wrap(
+                                spacing: 3,
+                                runSpacing: 3,
+                                children: [
+                                  _buildFeatureChip('Attached Bathroom'),
+                                  _buildFeatureChip('Fully Furnished'),
+                                  _buildFeatureChip('Near Mall/Supermarket'),
+                                  _buildFeatureChip('Internet/Wifi'),
+                                  _buildFeatureChip('Washing Machine'),
+                                ],
+                              ),
+                              const SizedBox(height: 3),
+                              const Row(
+                                children: [
+                                  Icon(
+                                    Icons.location_on,
+                                    size: 10,
+                                  ),
+                                  SizedBox(width: 3.5),
+                                  Text(
+                                    'Location',
+                                    style: TextStyle(fontSize: 10),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+                  child: Container(
+                    padding: const EdgeInsets.all(5.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(5),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color.fromARGB(104, 67, 67, 67)
+                              .withOpacity(0.2),
+                          spreadRadius: 1,
+                          blurRadius: 3,
+                          offset:
+                              const Offset(0, 2), // changes position of shadow
+                        )
+                      ],
+                    ),
+                    child: Row(
+                      children: [
+                        Stack(
+                          children: [
+                            Image.asset(
+                              'assets/room.jpg',
+                              width: 130,
+                              height: 115,
+                              fit: BoxFit.cover,
+                            ),
+                            const Positioned(
+                              top: 5,
+                              left: 5,
+                              child: VerifiedContainer(),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Room',
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Icon(
+                                    Icons.favorite_border,
+                                    size: 20,
+                                  ),
+                                ],
+                              ),
+                              const Text(
+                                'Rs.6999 Monthly',
+                                style: TextStyle(
+                                  fontSize: 10.5,
+                                ),
+                              ),
+                              const SizedBox(height: 2),
+                              Wrap(
+                                spacing: 3,
+                                runSpacing: 3,
+                                children: [
+                                  _buildFeatureChip('Attached Bathroom'),
+                                  _buildFeatureChip('Fully Furnished'),
+                                  _buildFeatureChip('Near Mall/Supermarket'),
+                                  _buildFeatureChip('Internet/Wifi'),
+                                  _buildFeatureChip('Washing Machine'),
+                                ],
+                              ),
+                              const SizedBox(height: 3),
+                              const Row(
+                                children: [
+                                  Icon(
+                                    Icons.location_on,
+                                    size: 10,
+                                  ),
+                                  SizedBox(width: 3.5),
+                                  Text(
+                                    'Location',
+                                    style: TextStyle(fontSize: 10),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const Align(
+              alignment: Alignment.center,
+              child: Row(
+                mainAxisSize: MainAxisSize
+                    .min, // This will make the Row take minimum space required
+                children: [
+                  Text(
+                    'View More',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.red,
+                      decoration: TextDecoration.underline,
+                      decorationColor: Colors.red,
+                    ),
+                  ),
+                  SizedBox(
+                      width:
+                          1), // Add some spacing between the text and the icon
+                  Icon(
+                    Icons.expand_more_rounded,
+                    color: Colors.red,
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Latest',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+                  child: Container(
+                    padding: const EdgeInsets.all(5.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(5),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color.fromARGB(145, 67, 67, 67)
+                              .withOpacity(0.2),
+                          spreadRadius: 1,
+                          blurRadius: 3,
+                          offset:
+                              const Offset(0, 2), // changes position of shadow
+                        )
+                      ],
+                    ),
+                    child: Row(
+                      children: [
+                        Stack(
+                          children: [
+                            Image.asset(
+                              'assets/room.jpg',
+                              width: 130,
+                              height: 115,
+                              fit: BoxFit.cover,
+                            ),
+                            const Positioned(
+                              top: 5,
+                              left: 5,
+                              child: VerifiedContainer(),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Room',
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Icon(
+                                    Icons.favorite_border,
+                                    size: 20,
+                                  ),
+                                ],
+                              ),
+                              const Text(
+                                'Rs.6999 Monthly',
+                                style: TextStyle(
+                                  fontSize: 10.5,
+                                ),
+                              ),
+                              const SizedBox(height: 2),
+                              Wrap(
+                                spacing: 3,
+                                runSpacing: 3,
+                                children: [
+                                  _buildFeatureChip('Attached Bathroom'),
+                                  _buildFeatureChip('Fully Furnished'),
+                                  _buildFeatureChip('Near Mall/Supermarket'),
+                                  _buildFeatureChip('Internet/Wifi'),
+                                  _buildFeatureChip('Washing Machine'),
+                                ],
+                              ),
+                              const SizedBox(height: 3),
+                              const Row(
+                                children: [
+                                  Icon(
+                                    Icons.location_on,
+                                    size: 10,
+                                  ),
+                                  SizedBox(width: 3.5),
+                                  Text(
+                                    'Location',
+                                    style: TextStyle(fontSize: 10),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+                  child: Container(
+                    padding: const EdgeInsets.all(5.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(5),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color.fromARGB(104, 67, 67, 67)
+                              .withOpacity(0.2),
+                          spreadRadius: 1,
+                          blurRadius: 3,
+                          offset:
+                              const Offset(0, 2), // changes position of shadow
+                        )
+                      ],
+                    ),
+                    child: Row(
+                      children: [
+                        Stack(
+                          children: [
+                            Image.asset(
+                              'assets/villa.jpeg',
+                              width: 130,
+                              height: 115,
+                              fit: BoxFit.cover,
+                            ),
+                            const Positioned(
+                              top: 5,
+                              left: 5,
+                              child: VerifiedContainer(),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Villa',
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Icon(
+                                    Icons.favorite_border,
+                                    size: 20,
+                                  ),
+                                ],
+                              ),
+                              const Text(
+                                'Rs.6999 Monthly',
+                                style: TextStyle(
+                                  fontSize: 10.5,
+                                ),
+                              ),
+                              const SizedBox(height: 2),
+                              Wrap(
+                                spacing: 3,
+                                runSpacing: 3,
+                                children: [
+                                  _buildFeatureChip('Attached Bathroom'),
+                                  _buildFeatureChip('Fully Furnished'),
+                                  _buildFeatureChip('Near Mall/Supermarket'),
+                                  _buildFeatureChip('Internet/Wifi'),
+                                  _buildFeatureChip('Washing Machine'),
+                                ],
+                              ),
+                              const SizedBox(height: 3),
+                              const Row(
+                                children: [
+                                  Icon(
+                                    Icons.location_on,
+                                    size: 10,
+                                  ),
+                                  SizedBox(width: 3.5),
+                                  Text(
+                                    'Location',
+                                    style: TextStyle(fontSize: 10),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+                  child: Container(
+                    padding: const EdgeInsets.all(5.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(5),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color.fromARGB(104, 67, 67, 67)
+                              .withOpacity(0.2),
+                          spreadRadius: 1,
+                          blurRadius: 3,
+                          offset:
+                              const Offset(0, 2), // changes position of shadow
+                        )
+                      ],
+                    ),
+                    child: Row(
+                      children: [
+                        Stack(
+                          children: [
+                            Image.asset(
+                              'assets/room.jpg',
+                              width: 130,
+                              height: 115,
+                              fit: BoxFit.cover,
+                            ),
+                            const Positioned(
+                              top: 5,
+                              left: 5,
+                              child: VerifiedContainer(),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Room',
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Icon(
+                                    Icons.favorite_border,
+                                    size: 20,
+                                  ),
+                                ],
+                              ),
+                              const Text(
+                                'Rs.6999 Monthly',
+                                style: TextStyle(
+                                  fontSize: 10.5,
+                                ),
+                              ),
+                              const SizedBox(height: 2),
+                              Wrap(
+                                spacing: 3,
+                                runSpacing: 3,
+                                children: [
+                                  _buildFeatureChip('Attached Bathroom'),
+                                  _buildFeatureChip('Fully Furnished'),
+                                  _buildFeatureChip('Near Mall/Supermarket'),
+                                  _buildFeatureChip('Internet/Wifi'),
+                                  _buildFeatureChip('Washing Machine'),
+                                ],
+                              ),
+                              const SizedBox(height: 3),
+                              const Row(
+                                children: [
+                                  Icon(
+                                    Icons.location_on,
+                                    size: 10,
+                                  ),
+                                  SizedBox(width: 3.5),
+                                  Text(
+                                    'Location',
+                                    style: TextStyle(fontSize: 10),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const Align(
+              alignment: Alignment.center,
+              child: Row(
+                mainAxisSize: MainAxisSize
+                    .min, // This will make the Row take minimum space required
+                children: [
+                  Text(
+                    'View More',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.red,
+                      decoration: TextDecoration.underline,
+                      decorationColor: Colors.red,
+                    ),
+                  ),
+                  SizedBox(
+                      width:
+                          1), // Add some spacing between the text and the icon
+                  Icon(
+                    Icons.expand_more_rounded,
+                    color: Colors.red,
+                  ),
+                ],
+              ),
             ),
           ],
         ),
@@ -249,6 +917,8 @@ class _HomePageState extends State<HomePage> {
             currentIndex: _selectedIndex,
             type: BottomNavigationBarType.fixed,
             onTap: _onItemTapped,
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
             items: const [
               BottomNavigationBarItem(
                 icon: Icon(Icons.home),
@@ -277,10 +947,39 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  Widget _buildFeatureChip(String label) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 2.5, vertical: 1.5),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+            width: 0.8, color: const Color.fromARGB(213, 223, 223, 223)),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(
+            Icons.check,
+            color: Colors.green,
+            size: 13,
+          ),
+          const SizedBox(width: 1),
+          Text(
+            label,
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 8.5,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _getPage(int index) {
     switch (index) {
       case 0:
-        return const HomePage();
+        return const HomePage(title: 'Home');
       case 1:
         return const SavedPage();
       case 2:
@@ -290,7 +989,7 @@ class _HomePageState extends State<HomePage> {
       case 4:
         return const ProfilePage();
       default:
-        return const HomePage();
+        return const HomePage(title: 'Home');
     }
   }
 }
@@ -431,4 +1130,44 @@ class ProfilePage extends StatelessWidget {
       color: const Color(0xFF004225),
     );
   }
+}
+
+class VerifiedContainer extends StatelessWidget {
+  const VerifiedContainer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 1.5),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(5),
+      ),
+      child: const Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            Icons.verified,
+            color: Colors.blue,
+            size: 10,
+          ),
+          SizedBox(width: 2),
+          Text(
+            'Verified',
+            style: TextStyle(
+              color: Colors.blue,
+              fontWeight: FontWeight.bold,
+              fontSize: 7.5,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+void main() {
+  runApp(const MaterialApp(
+    home: HomePage(title: 'Villa Details'),
+  ));
 }
