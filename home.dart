@@ -90,7 +90,6 @@ class _HomePageState extends State<HomePage> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 3, vertical: 8),
                   child: Container(
-                    width: 100,
                     height: 35,
                     decoration: BoxDecoration(
                       color: const Color(0xFF004225),
@@ -133,7 +132,6 @@ class _HomePageState extends State<HomePage> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 3, vertical: 8),
                   child: Container(
-                    width: 130,
                     height: 35,
                     decoration: BoxDecoration(
                       color: const Color(0xFF004225),
@@ -176,7 +174,6 @@ class _HomePageState extends State<HomePage> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 3, vertical: 8),
                   child: Container(
-                    width: 110,
                     height: 35,
                     decoration: BoxDecoration(
                       color: const Color(0xFF004225),
